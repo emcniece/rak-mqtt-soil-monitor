@@ -47,7 +47,7 @@ Following this you can search for "RAKwireless ESP32 Modules" (or keyword: RAK11
 
 The RAK11200 ESP32 module has a BOOT pin that must be pulled to GND to enable upload/programming mode. The RAK19003 Mini Base Board exposes this pin on the edge headers. A wire may be used to short BOOT and GND, or you can solder male header pins and use a jumper (provided with the base board kit) to enable boot mode. A small SPST tactile pushbutton switch can be soldered to leads of female headers, creating a dedicated boot switch.
 
-<img src="assets/boot-switch-example.jpg" alt="Example boot switch using female headers and SPST pushbutton" title="Example boot switch using female headers and SPST pushbutton" width="350" />
+<img src="assets/boot-switch-example.jpg" alt="Example boot switch using female headers and SPST pushbutton" title="Example boot switch using female headers and SPST pushbutton" width="350" /> <img src="assets/RAK19003.png" alt="RAK19003 mini base board with ground and boot pins highlighted" title="RAK19003 mini base board with ground and boot pins highlighted" width="350" />
 
 Programming sequence:
 
@@ -68,6 +68,9 @@ Now your ESP32 module should be running your code. Open the Arduino IDE serial m
 
 ## ToDo
 
-- Cleaner MQTT publishing method
-- Low-power operation
-- Soil moisture sensor
+- [ ] Cleaner MQTT publishing method (wrap string formatting and serial printing)
+- [ ] Low-power operation
+- [ ] Soil moisture sensor
+- [ ] Improved battery measurement curve
+- [ ] MQTT topic updatable from MQTT message
+- [ ] Linting & tests

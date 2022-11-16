@@ -42,7 +42,7 @@ void publish_temperature(){
   Serial.println(temperatureString);
 
   // publish temperature
-  mqttClient.publish("RAK11200/temperature", temperatureString);
+  mqttClient.publish("RAK11200-2/temperature", temperatureString);
 
   humidity = g_shtc3.toPercent();
 
@@ -51,21 +51,21 @@ void publish_temperature(){
   snprintf(humidityString, sizeof(humidityString), "%.1f", humidity);
   Serial.print("Humidity: ");
   Serial.println(humidityString);
-  mqttClient.publish("RAK11200/humidity", humidityString);
+  mqttClient.publish("RAK11200-2/humidity", humidityString);
 }
 
 void publish_battery(){
   float vbat_mv = read_battery_mv();
   char vbatMvString[16] = { 0 };
   snprintf(vbatMvString, sizeof(vbatMvString), "%.1f", vbat_mv);
-  mqttClient.publish("RAK11200/battery_voltage", vbatMvString);
+  mqttClient.publish("RAK11200-2/battery_voltage", vbatMvString);
   Serial.print("Battery millivolts: ");
   Serial.println(vbatMvString);
 
   uint8_t vbat_pc = read_battery_percent();
   char vbatPcString[16] = { 0 };
   snprintf(vbatPcString, sizeof(vbatPcString), "%d", vbat_pc);
-  mqttClient.publish("RAK11200/battery_percent", vbatPcString);
+  mqttClient.publish("RAK11200-2/battery_percent", vbatPcString);
   Serial.print("Battery percentage: ");
   Serial.println(vbatPcString);
 }

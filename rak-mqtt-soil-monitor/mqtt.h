@@ -62,6 +62,7 @@ void reconnect() {
 }
 
 void setup_mqtt(){
+  Serial.println("MQTT setup... ");
   // set LED pin mode
   pinMode(ledPin, OUTPUT);
 
@@ -69,4 +70,5 @@ void setup_mqtt(){
   mqttClient.setServer(SECRET_MQTT_SERVER, SECRET_MQTT_PORT);
   // set callback of receiving message
   mqttClient.setCallback(callback);
+  Serial.println("MQTT setup complete");
 }

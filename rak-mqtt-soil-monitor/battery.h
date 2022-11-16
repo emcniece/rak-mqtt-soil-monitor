@@ -7,7 +7,7 @@
 #define VBAT_DIVIDER (0.6F)       // 1.5M + 1M voltage divider on VBAT = (1.5M / (1M + 1.5M))
 #define VBAT_DIVIDER_COMP (1.45F)   // Compensation factor for the VBAT divider, depend on the board
 #define REAL_VBAT_MV_PER_LSB (VBAT_DIVIDER_COMP * VBAT_MV_PER_LSB)
-#define NO_OF_SAMPLES   256          //Multisampling
+#define NO_OF_SAMPLES   10          //Multisampling
 
 #define LUT_POINTS 20
 #define LUT_VREF_LOW 1000
@@ -112,19 +112,25 @@ uint32_t esp_adc_cal_raw_to_voltage(uint32_t adc_raw) {
 }
 
 void setup_battery(){
-  Serial.println("Battery setup");
-
+  Serial.print("Battery setup... ");
   adcAttachPin(vbat_pin);
   analogSetAttenuation(ADC_11db);
   // Set the resolution to 12-bit (0..4095)
   analogReadResolution(12); // Can be 8, 10, 12 or 14
+  Serial.println("complete");
 }
 
+/* TODO:
+  This percentage calculation needs adjustment.
+  18650 LiIon cells range from 2.5-4.2V, can we find a good slope?
+  https://www.reddit.com/r/18650masterrace/comments/ibhp9i/comment/g20wcv7/?utm_source=reddit&utm_medium=web2x&context=3
+  https://www.calculator.net/slope-calculator.html?type=1&x11=0&y11=3&x12=100&y12=4.2&x=83&y=16
+*/
 uint8_t mvToPercent(float mvolts){
-  if (mvolts < 3300)
+  if (mvolts < 3000)
     return 0;
 
-  if (mvolts < 3600){
+  if (mvolts < 4200){
     mvolts -= 3300;
     return mvolts / 30;
   }
@@ -147,7 +153,6 @@ float read_battery_mv(void){
 
   return mv * (1/VBAT_DIVIDER);
 }
-
 
 uint8_t read_battery_percent(){
   // Get a raw ADC reading
